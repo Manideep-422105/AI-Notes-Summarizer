@@ -59,14 +59,14 @@ function Summarizer() {
       toast.error(err.message);
     }
   }
+
   async function handleShare() {
     if (!summaryId) return toast.warn("Generate or load a summary first.");
     const emails = recipients
       .split(",")
       .map((e) => e.trim())
       .filter(Boolean);
-    if (!emails.length)
-      return toast.warn("Please enter at least one recipient email.");
+    if (!emails.length) return toast.warn("Please enter at least one recipient email.");
 
     const sendingToastId = toast.loading("Sending email...");
 
@@ -90,8 +90,7 @@ function Summarizer() {
   }
 
   async function handleDelete(idToDelete) {
-    if (!window.confirm("Are you sure you want to delete this summary?"))
-      return;
+    if (!window.confirm("Are you sure you want to delete this summary?")) return;
     try {
       await deleteSummary(idToDelete);
       if (summaryId === idToDelete) {
@@ -99,7 +98,7 @@ function Summarizer() {
         setSummaryId(null);
       }
       toast.success("Summary deleted ✅");
-      await loadSummaries(); 
+      await loadSummaries();
     } catch (err) {
       toast.error(err.message);
     }
@@ -167,10 +166,7 @@ function Summarizer() {
                   key={item._id}
                   className={summaryId === item._id ? "selected" : ""}
                 >
-                  <div
-                    className="history-item-content"
-                    onClick={() => loadFromHistory(item)}
-                  >
+                  <div className="history-item-content" onClick={() => loadFromHistory(item)}>
                     <p>
                       <strong>{item.summary.slice(0, 50)}...</strong>
                     </p>
@@ -178,10 +174,7 @@ function Summarizer() {
                       {new Date(item.createdAt).toLocaleDateString()}
                     </small>
                   </div>
-                  <button
-                    onClick={() => handleDelete(item._id)}
-                    className="delete-btn"
-                  >
+                  <button onClick={() => handleDelete(item._id)} className="delete-btn">
                     Delete
                   </button>
                 </li>
@@ -192,7 +185,9 @@ function Summarizer() {
           </ul>
         </div>
       </div>
+
       <style>{`
+        /* --- Base Styles --- */
         .container { max-width: 1200px; margin: auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         h1 { text-align: center; margin-bottom: 30px; color: #333; }
         .main-content { display: flex; flex-wrap: wrap; gap: 30px; }
@@ -213,9 +208,33 @@ function Summarizer() {
         .history-item-content { cursor: pointer; flex-grow: 1; }
         .delete-btn { position: static; padding: 4px 8px; font-size: 0.8em; background: #dc3545; }
         .delete-btn:hover { background: #c82333; }
+
+        /* --- Mobile-Friendly Styles (screens below 768px) --- */
         @media (max-width: 768px) {
-          .main-content { flex-direction: column; }
-          .right-panel { border-left: none; padding-left: 0; border-top: 1px solid #e0e0e0; padding-top: 20px; }
+          .container {
+            padding: 15px; /* Reduce padding on smaller screens */
+          }
+          h1 {
+            font-size: 1.6rem; /* Make the main heading smaller */
+          }
+          .main-content {
+            flex-direction: column; /* Stack the left and right panels vertically */
+          }
+          .left-panel, .right-panel {
+            min-width: 100%; /* Allow panels to shrink to screen width */
+          }
+          .right-panel {
+            border-left: none; /* Remove side border */
+            padding-left: 0;
+            border-top: 1px solid #e0e0e0; /* Add top border for separation */
+            padding-top: 20px;
+            margin-top: 20px;
+          }
+          .actions {
+            flex-direction: column; /* Stack action buttons and input vertically */
+            align-items: stretch; /* Make all items in .actions full-width */
+            gap: 12px;
+          }
         }
       `}</style>
     </div>
