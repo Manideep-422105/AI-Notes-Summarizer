@@ -27,7 +27,7 @@ function Summarizer() {
       const data = await fetchSummaries();
       setSummaries(data);
     } catch (err) {
-      toast.error(err.message);
+      console.warn("Could not fetch summaries on load:", err.message);
     }
   }
 

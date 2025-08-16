@@ -31,7 +31,7 @@ export async function shareSummary(id, recipients) {
 }
 export async function fetchSummaries() {
   const res = await fetch(`${BASE_URL}/summary/summaries`);
-  // if (!res.ok) throw new Error("Error fetching summaries");
+  if (!res.ok) throw new Error("Error fetching summaries");
   return res.json();
 }
 
