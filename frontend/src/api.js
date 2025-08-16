@@ -1,44 +1,57 @@
 const BASE_URL = "https://ai-notes-summarizer-5qok.onrender.com";
 
+async function handleResponse(res) {
+  const text = await res.text();
+  if (!res.ok) {
+    try {
+      const data = JSON.parse(text); 
+      throw new Error(data.error || JSON.stringify(data));
+    } catch {
+      throw new Error(text || "Unknown error from server");
+    }
+  }
+  try {
+    return JSON.parse(text); 
+  } catch {
+    return text; 
+  }
+}
+
 export async function generateSummary(transcript, prompt) {
-  const res = await fetch(`${BASE_URL}/summary/generate`, {
+  const res = await fetch(`${BASE_URL}/api/v1/summary/generate`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ transcript, prompt }),
   });
-  if (!res.ok) throw new Error("Error generating summary");
-  return res.json();
+  return handleResponse(res);
 }
 
 export async function editSummary(id, summary) {
-  const res = await fetch(`${BASE_URL}/summary/edit/${id}`, {
+  const res = await fetch(`${BASE_URL}/api/v1/summary/edit/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ summary }),
   });
-  if (!res.ok) throw new Error("Error editing summary");
-  return res.json();
+  return handleResponse(res);
 }
 
 export async function shareSummary(id, recipients) {
-  const res = await fetch(`${BASE_URL}/summary/share/${id}`, {
+  const res = await fetch(`${BASE_URL}/api/v1/summary/share/${id}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ recipients }),
   });
-  if (!res.ok) throw new Error("Error sharing summary");
-  return res.json();
+  return handleResponse(res);
 }
+
 export async function fetchSummaries() {
-  const res = await fetch(`${BASE_URL}/summary/summaries`);
-  if (!res.ok) throw new Error("Error fetching summaries");
-  return res.json();
+  const res = await fetch(`${BASE_URL}/api/v1/summary/summaries`);
+  return handleResponse(res);
 }
 
 export async function deleteSummary(id) {
-  const res = await fetch(`${BASE_URL}/summary/deleteSummaries/${id}`, {
+  const res = await fetch(`${BASE_URL}/api/v1/summary/deleteSummaries/${id}`, {
     method: "DELETE",
   });
-  if (!res.ok) throw new Error("Error deleting summary");
-  return res.json();
+  return handleResponse(res);
 }
