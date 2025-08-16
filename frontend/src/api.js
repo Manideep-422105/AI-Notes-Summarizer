@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:4545/api/v1";
+const BASE_URL = "https://ai-notes-summarizer-5qok.onrender.com";
 
 export async function generateSummary(transcript, prompt) {
   const res = await fetch(`${BASE_URL}/summary/generate`, {
