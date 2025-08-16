@@ -7,7 +7,7 @@ export async function generateSummary(transcript, prompt) {
     body: JSON.stringify({ transcript, prompt }),
   });
   if (!res.ok) throw new Error("Error generating summary");
-  return res.json(); // { id, summary }
+  return res.json();
 }
 
 export async function editSummary(id, summary) {
@@ -17,7 +17,7 @@ export async function editSummary(id, summary) {
     body: JSON.stringify({ summary }),
   });
   if (!res.ok) throw new Error("Error editing summary");
-  return res.json(); // { summary }
+  return res.json();
 }
 
 export async function shareSummary(id, recipients) {
@@ -27,16 +27,18 @@ export async function shareSummary(id, recipients) {
     body: JSON.stringify({ recipients }),
   });
   if (!res.ok) throw new Error("Error sharing summary");
-  return res.json(); // { message }
+  return res.json();
 }
 export async function fetchSummaries() {
   const res = await fetch(`${BASE_URL}/summary/summaries`);
-  if (!res.ok) throw new Error("Error fetching summaries");
-  return res.json(); 
+  // if (!res.ok) throw new Error("Error fetching summaries");
+  return res.json();
 }
 
 export async function deleteSummary(id) {
-  const res = await fetch(`${BASE_URL}/summary/deleteSummaries/${id}`, { method: "DELETE" });
+  const res = await fetch(`${BASE_URL}/summary/deleteSummaries/${id}`, {
+    method: "DELETE",
+  });
   if (!res.ok) throw new Error("Error deleting summary");
   return res.json();
 }

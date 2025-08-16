@@ -37,7 +37,7 @@ function Summarizer() {
       const res = await generateSummary(transcript, prompt);
       setSummary(res.summary);
       setSummaryId(res.id);
-      toast.success("Summary generated ✅");
+      toast.success("Summary generated");
       await loadSummaries();
     } catch (err) {
       toast.error(err.message);
@@ -65,7 +65,6 @@ function Summarizer() {
       .filter(Boolean);
     if (!emails.length) return toast.warn("Enter at least one email.");
 
-    // Show sending email toast
     const sendingToastId = toast.info("Sending email...", {
       autoClose: false,
       closeOnClick: false,
@@ -73,11 +72,9 @@ function Summarizer() {
 
     try {
       await shareSummary(summaryId, emails);
-      // Dismiss sending toast
       toast.dismiss(sendingToastId);
       toast.success("Email sent ✅");
     } catch (err) {
-      // Dismiss sending toast
       toast.dismiss(sendingToastId);
       toast.error(err.message);
     }
@@ -92,7 +89,7 @@ function Summarizer() {
         setSummary("");
         setSummaryId(null);
       }
-      toast.success("Summary deleted ✅");
+      toast.success("Summary deleted");
       await loadSummaries();
     } catch (err) {
       toast.error(err.message);
@@ -112,7 +109,6 @@ function Summarizer() {
       <h1>AI Meeting Notes Summarizer</h1>
 
       <div className="main-content">
-        {/* Left Side */}
         <div className="left-panel">
           <label>Transcript:</label>
           <textarea
@@ -150,7 +146,6 @@ function Summarizer() {
           </div>
         </div>
 
-        {/* Right Side */}
         <div className="right-panel">
           <h3>Summary History</h3>
           <ul>
@@ -171,7 +166,6 @@ function Summarizer() {
         </div>
       </div>
 
-      {/* Toast container */}
       <ToastContainer
         position="top-right"
         autoClose={2500}
@@ -180,7 +174,6 @@ function Summarizer() {
         theme="colored"
       />
 
-      {/* Styles */}
       <style>{`
         .container {
           max-width: 1000px;
