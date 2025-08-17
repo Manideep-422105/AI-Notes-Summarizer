@@ -209,30 +209,29 @@ function Summarizer() {
         .delete-btn { position: static; padding: 4px 8px; font-size: 0.8em; background: #dc3545; }
         .delete-btn:hover { background: #c82333; }
 
-        /* --- Mobile-Friendly Styles (screens below 768px) --- */
         @media (max-width: 768px) {
           .container {
-            padding: 15px; /* Reduce padding on smaller screens */
+            padding: 15px; 
           }
           h1 {
-            font-size: 1.6rem; /* Make the main heading smaller */
+            font-size: 1.6rem; 
           }
           .main-content {
-            flex-direction: column; /* Stack the left and right panels vertically */
+            flex-direction: column;
           }
           .left-panel, .right-panel {
-            min-width: 100%; /* Allow panels to shrink to screen width */
+            min-width: 100%; 
           }
           .right-panel {
-            border-left: none; /* Remove side border */
+            border-left: none; 
             padding-left: 0;
-            border-top: 1px solid #e0e0e0; /* Add top border for separation */
+            border-top: 1px solid #e0e0e0; 
             padding-top: 20px;
             margin-top: 20px;
           }
           .actions {
-            flex-direction: column; /* Stack action buttons and input vertically */
-            align-items: stretch; /* Make all items in .actions full-width */
+            flex-direction: column;
+            align-items: stretch; 
             gap: 12px;
           }
         }

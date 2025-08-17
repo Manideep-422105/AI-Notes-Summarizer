@@ -15,10 +15,11 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(
-    cors({
-        origin: "*",
-        credentials: true,
-    })
+  cors({
+    origin: ["https://ai-notes-summarizer-chi.vercel.app"],  
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
 );
 
 
